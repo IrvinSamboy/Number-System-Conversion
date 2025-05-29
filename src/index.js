@@ -1,3 +1,4 @@
+const hexTable = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D", "E","F"]
 
 const decimalToBin = (value) => {
     let divisionResult = value
@@ -22,7 +23,6 @@ const binToDecimal = (value) => {
 }
 
 const decimalToHex = (value) => {
-    const hexTable = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D", "E","F"]
     let divisionResult = value
     let hexNumber = []
 
@@ -40,7 +40,15 @@ const decimalToHex = (value) => {
 }
 
 const hexToDecimal = (value) => {
-    
+    let decimalValue = 0
+    const hexValue = value.toString().split("")
+    hexValue.map((item, index) => {
+        const hexValueNumber = Number.isInteger(Number(item)) ? Number(item) : hexTable.findIndex(fitem => item === fitem)
+        decimalValue = decimalValue + (hexValueNumber * Math.pow(16, (hexValue.length-1) - index))
+    })
+
+    return decimalValue
 }
 
 console.log(decimalToHex(16))
+console.log(hexToDecimal("10"))
