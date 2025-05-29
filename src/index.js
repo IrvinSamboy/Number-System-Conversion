@@ -21,5 +21,35 @@ const binToDecimal = (value) => {
     return decimalValue
 }
 
-console.log(decimalToBin(46))
-console.log(binToDecimal(101110))
+const decimalToHex = (value) => {
+    const hexTable = [0,1,2,3,4,5,6,7,8,9,"A","B","C","D","F"]
+    let divisionResult = value / 16
+    let hexNumber = []
+
+    if(Number.isInteger(divisionResult)){
+        console.log(divisionResult)
+        hexNumber.push(hexTable[divisionResult])
+    }
+
+    else {
+        hexNumber.push(hexTable[value % 16])
+    }
+
+    divisionResult = value
+
+    do{
+        const division = divisionResult / 16
+        divisionResult = !Number.isInteger(division)? Math.trunc(division) : division
+        if(divisionResult > 16) {
+            const divisionResidue = divisionResult % 16
+            hexNumber.push(hexTable[divisionResidue])
+        }
+        else {
+            hexNumber.push(hexTable[divisionResult])
+        }
+
+    } while(divisionResult > 16 )
+    return hexNumber.reverse().join("")
+}
+
+console.log(decimalToHex(2742))
