@@ -50,5 +50,29 @@ const hexToDecimal = (value) => {
     return decimalValue
 }
 
-console.log(decimalToHex(16))
-console.log(hexToDecimal("10"))
+const decimalToOctar = (value) => {
+    let divisionResult = value
+    let octarValue = []
+    do {
+        const division = divisionResult/8
+        const divisionResidue = divisionResult % 8
+        octarValue.push(divisionResidue)
+        divisionResult = !Number.isInteger(division)? Math.trunc(division) : division
+    } while(divisionResult !== 0)
+    return octarValue.reverse().join("")
+}
+
+const octarToDecimal = (value) => {
+    let octarValue = value.toString().split("")
+    let decimalValue = 0
+
+    octarValue.map((item, index) => {
+        decimalValue = decimalValue + (item * Math.pow(8, ((octarValue.length-1) - index)))
+    })
+
+    return decimalValue
+}
+
+
+console.log(decimalToOctar(156))
+console.log(octarToDecimal(234))
