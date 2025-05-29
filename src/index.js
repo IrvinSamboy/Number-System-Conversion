@@ -10,6 +10,17 @@ const decimalToBin = (value) => {
     return binValue.reverse().join("")
 }
 
+const binToDecimal = (value) => {
+    let binValue = value.toString().split("").reverse()
+    let decimalValue = 0
+    console.log(bin)
+    for(i = 0; i<binValue.length; i++){
+        decimalValue = decimalValue + (Number(binValue[i]) * Math.pow(2, i))
+        console.log(Number(binValue[i]) * Math.pow(2, i))
+    }
+
+    return decimalValue
+}
 
 console.log(decimalToBin(46))
-
+console.log(binToDecimal("010111"))
