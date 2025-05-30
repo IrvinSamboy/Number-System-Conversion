@@ -1,11 +1,265 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Conversor de Números</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .select-field {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-field:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .convert-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+        }
+
+        .convert-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .convert-btn:active {
+            transform: translateY(0);
+        }
+
+        .result-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e1e5e9;
+            margin-top: 20px;
+        }
+
+        .result-label {
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .result-display {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            color: #333;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            word-break: break-all;
+        }
+
+        .conversion-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: #e8f2ff;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .conversion-arrow {
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .conversion-types {
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .from-type, .to-type {
+            padding: 5px 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .conversion-info {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .conversion-types {
+                justify-content: center;
+            }
+        }
+
+        .placeholder-text {
+            color: #999;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="header">
+            <h1>🔢 Conversor</h1>
+            <p>Convierte números entre diferentes sistemas</p>
+        </div>
+
+        <form id="converterForm">
+            <div class="form-group">
+                <label for="numberInput">Número a convertir:</label>
+                <input 
+                    type="text" 
+                    id="numberInput" 
+                    class="input-field" 
+                    placeholder="Ingresa el número aquí..."
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="conversionType">Tipo de conversión:</label>
+                <select id="conversionType" class="select-field">
+                    <option value="">Selecciona una conversión</option>
+                    <option value="dec-to-bin">Decimal a Binario</option>
+                    <option value="bin-to-dec">Binario a Decimal</option>
+                    <option value="dec-to-hex">Decimal a Hexadecimal</option>
+                    <option value="hex-to-dec">Hexadecimal a Decimal</option>
+                    <option value="dec-to-oct">Decimal a Octal</option>
+                    <option value="oct-to-dec">Octal a Decimal</option>
+                </select>
+            </div>
+
+            <button type="button" id="convertBtn" class="convert-btn">
+                ✨ Convertir
+            </button>
+        </form>
+
+        <div class="conversion-info" id="conversionInfo">
+            <div class="conversion-types">
+                <span class="from-type" id="fromType">Selecciona</span>
+                <span class="conversion-arrow">→</span>
+                <span class="to-type" id="toType">conversión</span>
+            </div>
+        </div>
+
+        <div class="result-section">
+            <div class="result-label">Resultado:</div>
+            <div class="result-display" id="resultDisplay">
+                <span class="placeholder-text" id="resultLBL">El resultado aparecerá aquí...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="./src/index.js"></script>
 </body>
+</html>
+
 </html>
